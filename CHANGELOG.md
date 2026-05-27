@@ -1,28 +1,29 @@
 # Changelog
 
+## [0.2.1] - 2026-05-27
+
+### Corregido
+- Code review: eliminada variable CSS `--accent` sin uso
+- Code review: limpieza de propiedades redundantes en `.btn-changelog`
+- Code review: Google Fonts reemplazadas por fuentes del sistema
+- Code review: escape HTML en `buildCard` (previene XSS)
+- Code review: race condition en `loadResources` con cambio rápido de pestañas
+- Code review: debounce en botón "Abrir" para evitar requests duplicados
+- Code review: parámetro `after` sin uso eliminado de `apiFetchResources`
+- Code review: uso consistente del helper `$()` en todo el código
+- Sincronización de versión entre `main.js` y `neutralino.config.json`
+
 ## [0.2.0] - 2026-05-27
 
 ### Añadido
-- Banner de actualización con enlace "Nota de Cambios" que redirige a la release de GitHub
+- Banner de actualización con enlace "Nota de Cambios" a la release de GitHub
 - Scrollbar thin azul con transparencia
-- Protección contra race conditions al cambiar de pestaña rápidamente
-- Debounce en botón "Abrir" para evitar múltiples requests simultáneas
-- Escape HTML en títulos y nombres de catálogos (previene XSS)
 
 ### Cambiado
-- Rediseño completo de UI con tema oscuro estilo Vercel (fondos negros, texto blanco, acentos azules)
-- Badges rediseñados con bordes de color: materia (verde), tipo (azul), formato (naranja), año (púrpura)
-- Fuentes del sistema en lugar de Google Fonts (offline-friendly)
-- Pestaña "Últimos" limita a 10 recursos
-- Pestaña "Más visitados" limita a 5 recursos
-- Texto de estadísticas simplificado ("↓ 123" en vez de emoji descriptivo)
-
-### Corregido
-- Variable CSS `--accent` sin uso eliminada
-- Clase `.btn-changelog` limpiada (hereda propiedades base de `.btn`)
-- Parámetro `after` sin uso eliminado de `apiFetchResources`
-- Consistencia en uso de helper `$()` en `checkForUpdate`
-- Sincronización de versión entre `main.js` y `neutralino.config.json`
+- Rediseño completo de UI con tema oscuro estilo Vercel
+- Badges con bordes de color: materia (verde), tipo (azul), formato (naranja), año (púrpura)
+- Fuentes del sistema en lugar de Google Fonts
+- Pestaña "Últimos" limita a 10 recursos, "Más visitados" a 5
 
 ## [0.1.0] - 2026-05-20
 

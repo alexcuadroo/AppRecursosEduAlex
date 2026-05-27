@@ -1,4 +1,4 @@
-const APP_VERSION = '0.2.0';
+const APP_VERSION = '0.2.1';
 const API_ORIGIN = 'https://rec.edualex.uy';
 const EXT_ID = 'edu.alex.apiproxy';
 const useExtension = typeof Neutralino !== 'undefined' && Neutralino.extensions;
