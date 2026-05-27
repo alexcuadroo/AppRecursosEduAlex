@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
   "applicationId": "edu.alex.apprecursosedualex",
   "version": "0.2.1",
   "defaultMode": "window",

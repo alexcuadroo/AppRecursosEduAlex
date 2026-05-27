@@ -23,3 +23,12 @@ build.ps1
 # OS
 Thumbs.db
 .DS_Store
+AppRecursosEduAlex-v0.2.1-win_x64.zip
+AppRecursosEduAlex-v0.2.1-linux_arm64.zip
+AppRecursosEduAlex-v0.2.1-linux_armhf.zip
+.gitignore
+AppRecursosEduAlex-v0.2.1-linux_x64.zip
+AppRecursosEduAlex-v0.2.1-mac_arm64.zip
+.gitignore
+AppRecursosEduAlex-v0.2.1-mac_universal.zip
+AppRecursosEduAlex-v0.2.1-mac_x64.zip
