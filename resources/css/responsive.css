@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  #app { flex-direction: column; }
+
+  .filter-pills { flex-wrap: wrap; }
+
+  .header-top { flex-wrap: wrap; padding: 0.65rem 1rem; }
+  .header-top .search-wrapper { max-width: none; }
+  .filter-bar { padding: 0 1rem 0.65rem; }
+  .active-filters { padding: 0 1rem 0.5rem; }
+  #content { padding: 1rem; }
+
+  .resource-grid { grid-template-columns: 1fr; }
+}

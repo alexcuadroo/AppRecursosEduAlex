@@ -1,0 +1,41 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #000;
+  --surface: #111;
+  --surface-hover: #1a1a1a;
+  --border: #222;
+  --border-light: #333;
+  --text: #fff;
+  --text-secondary: #888;
+  --text-muted: #666;
+  --primary: #0070f3;
+  --primary-hover: #1da1f2;
+  --primary-alpha: rgba(0, 112, 243, 0.15);
+  --materia-bg: rgba(0, 200, 83, 0.15);
+  --materia-text: #00c853;
+  --materia-border: rgba(0, 200, 83, 0.4);
+  --tipo-bg: rgba(29, 161, 242, 0.15);
+  --tipo-text: #1da1f2;
+  --tipo-border: rgba(29, 161, 242, 0.4);
+  --formato-bg: rgba(255, 107, 53, 0.15);
+  --formato-text: #ff6b35;
+  --formato-border: rgba(255, 107, 53, 0.4);
+  --anio-bg: rgba(168, 85, 247, 0.15);
+  --anio-text: #a855f7;
+  --anio-border: rgba(168, 85, 247, 0.4);
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}

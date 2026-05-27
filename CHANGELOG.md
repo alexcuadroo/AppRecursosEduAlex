@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.3.0] - 2026-05-27
+
+### Añadido
+- Barra de filtros superior con search protagónico y dropdown pills (Materia, Tipo, Formato, Año)
+- Chips de filtros activos sobre el grid con botón "Limpiar todo"
+- Botón ✕ para limpiar búsqueda
+- Sidebar colapsable para filtros avanzados (togglable desde ⚙)
+- Pin tip sticky abajo a la derecha con persistencia en localStorage
+- HTML semántico: `<article>`, `<nav>`, `<form role="search">`, roles ARIA, aria-labels
+- Componentización de CSS (4 módulos) y JS (5 módulos)
+
+### Cambiado
+- Rediseño completo de filtros: selects reemplazados por chips seleccionables con dropdown
+- Tabs movidos a la misma línea que el título
+- Buscador movido a la derecha del header
+- Hover en cards más marcado (translateY + shadow)
+- Focus glow en inputs estilo Tailwind
+- Debounce de búsqueda reducido a 400ms
+- Orden de filtros consistente con badges: Materia → Tipo → Formato → Año
+
+### Corregido
+- Sincronización de versión entre state.js y neutralino.config.json
+- lookupName usaba `===` y fallaba con tipos (string vs number)
+- Dev script ahora modifica el JSON en memoria, sin archivos .bak
+
 ## [0.2.2] - 2026-05-27
 
 ### Cambiado

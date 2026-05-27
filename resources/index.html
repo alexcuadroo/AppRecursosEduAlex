@@ -9,55 +9,66 @@
   <body>
     <div id="app">
       <div class="app-body">
-        <aside id="sidebar">
-          <div class="sidebar-header">
-            <h2>Filtros</h2>
-            <button id="btnClearFilters" class="btn-sm">Limpiar</button>
-          </div>
-          <div class="filter-group">
-            <label for="filterMateria">Materia</label>
-            <select id="filterMateria"><option value="">Todas</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="filterAnio">Año</label>
-            <select id="filterAnio"><option value="">Todos</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="filterTipo">Tipo</label>
-            <select id="filterTipo"><option value="">Todos</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="filterFormato">Formato</label>
-            <select id="filterFormato"><option value="">Todos</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="filterSearch">Búsqueda</label>
-            <input type="text" id="filterSearch" placeholder="Buscar recursos...">
-          </div>
-          <div id="pinTip" class="pin-tip">
-            <span>Ancla la app a la barra de tareas: <strong>click derecho</strong> sobre el icono → <strong>Fijar a la barra de tareas</strong></span>
-            <button class="pin-tip-dismiss" aria-label="Cerrar">&times;</button>
-          </div>
-        </aside>
         <main id="main">
           <header id="main-header">
-            <h1>EduAlex <span class="subtitle">Recursos Educativos</span></h1>
-            <div class="tabs">
-              <button class="tab active" data-tab="all">Todos</button>
-              <button class="tab" data-tab="latest">Últimos</button>
-              <button class="tab" data-tab="top">Más visitados</button>
+            <div class="header-top">
+              <h1>EduAlex <a href="https://recursos.edualex.uy" target="_blank" rel="noopener" class="subtitle">Recursos Educativos</a></h1>
+              <form role="search" class="search-wrapper">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="filterSearch" placeholder="Buscar recursos..." autocomplete="off" aria-label="Buscar recursos">
+                <button id="searchClear" class="search-clear hidden" aria-label="Limpiar búsqueda">&times;</button>
+              </form>
+            </div>
+            <div class="filter-bar">
+              <nav aria-label="Vistas">
+                <div class="tabs" role="tablist">
+                  <button class="tab active" data-tab="all" role="tab" aria-selected="true">Todos</button>
+                  <button class="tab" data-tab="latest" role="tab" aria-selected="false">Últimos</button>
+                  <button class="tab" data-tab="top" role="tab" aria-selected="false">Más visitados</button>
+                </div>
+              </nav>
+              <div class="filter-pills" id="filterPills" role="group" aria-label="Filtros">
+                <div class="filter-pill" data-filter="materia">
+                  <button class="pill-btn" aria-haspopup="listbox" aria-expanded="false">Materia <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                  <div class="pill-dropdown" id="dd-materia" role="listbox"></div>
+                </div>
+                <div class="filter-pill" data-filter="tipo">
+                  <button class="pill-btn" aria-haspopup="listbox" aria-expanded="false">Tipo <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                  <div class="pill-dropdown" id="dd-tipo" role="listbox"></div>
+                </div>
+                <div class="filter-pill" data-filter="formato">
+                  <button class="pill-btn" aria-haspopup="listbox" aria-expanded="false">Formato <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                  <div class="pill-dropdown" id="dd-formato" role="listbox"></div>
+                </div>
+                <div class="filter-pill" data-filter="anio">
+                  <button class="pill-btn" aria-haspopup="listbox" aria-expanded="false">Año <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                  <div class="pill-dropdown" id="dd-anio" role="listbox"></div>
+                </div>
+              </div>
+            </div>
+            <div id="activeFilters" class="active-filters hidden" role="status" aria-live="polite">
+              <div id="activeChips" class="active-chips"></div>
+              <button id="btnClearFilters" class="clear-all">Limpiar todo</button>
             </div>
           </header>
-          <div id="content">
-            <div id="loading" class="loading hidden">Cargando recursos...</div>
-            <div id="error" class="error hidden"></div>
-            <div id="resource-grid" class="resource-grid"></div>
-          </div>
-          <div id="pagination" class="pagination hidden"></div>
+          <section id="content" aria-label="Listado de recursos">
+            <div id="loading" class="loading hidden" role="status">Cargando recursos...</div>
+            <div id="error" class="error hidden" role="alert"></div>
+            <div id="resource-grid" class="resource-grid" role="feed" aria-label="Recursos"></div>
+          </section>
+          <nav id="pagination" class="pagination hidden" aria-label="Paginación"></nav>
         </main>
+        <aside id="pinTip" class="pin-tip-sticky" aria-label="Consejo">
+          <span>Ancla la app a la barra de tareas: <strong>click derecho</strong> sobre el icono → <strong>Fijar a la barra de tareas</strong></span>
+          <button class="pin-tip-dismiss" aria-label="Cerrar">&times;</button>
+        </aside>
       </div>
     </div>
     <script src="/js/neutralino.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/state.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/filters.js"></script>
+    <script src="/js/app.js"></script>
   </body>
 </html>
