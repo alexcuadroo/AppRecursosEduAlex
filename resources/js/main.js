@@ -139,7 +139,7 @@ async function checkForUpdate() {
     if (!res.ok) return;
     const rel = await res.json();
     const latestTag = rel.tag_name;
-    const currentTag = `v${APP_VERSION}`;
+    const currentTag = `v.${APP_VERSION}`;
     if (latestTag === currentTag) return;
 
     const asset = rel.assets?.find(a => a.name.includes('win') || a.name.endsWith('.exe'));
