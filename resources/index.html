@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAlex - Recursos</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="app-body">
+        <aside id="sidebar">
+          <div class="sidebar-header">
+            <h2>Filtros</h2>
+            <button id="btnClearFilters" class="btn-sm">Limpiar</button>
+          </div>
+          <div class="filter-group">
+            <label for="filterMateria">Materia</label>
+            <select id="filterMateria"><option value="">Todas</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterAnio">Año</label>
+            <select id="filterAnio"><option value="">Todos</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterTipo">Tipo</label>
+            <select id="filterTipo"><option value="">Todos</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterFormato">Formato</label>
+            <select id="filterFormato"><option value="">Todos</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="filterSearch">Búsqueda</label>
+            <input type="text" id="filterSearch" placeholder="Buscar en resultados...">
+          </div>
+        </aside>
+        <main id="main">
+          <header id="main-header">
+            <h1>EduAlex <span class="subtitle">Recursos Educativos</span></h1>
+            <div class="tabs">
+              <button class="tab active" data-tab="all">Todos</button>
+              <button class="tab" data-tab="latest">Últimos</button>
+              <button class="tab" data-tab="top">Más visitados</button>
+            </div>
+          </header>
+          <div id="content">
+            <div id="loading" class="loading hidden">Cargando...</div>
+            <div id="error" class="error hidden"></div>
+            <div id="resource-grid" class="resource-grid"></div>
+            <div id="pagination" class="pagination hidden"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/js/neutralino.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
