@@ -1,44 +1,10 @@
-const APP_VERSION = '0.2.1';
-const API_ORIGIN = 'https://rec.edualex.uy';
-const EXT_ID = 'edu.alex.apiproxy';
-const useExtension = typeof Neutralino !== 'undefined' && Neutralino.extensions;
+const APP_VERSION = '0.2.2';
+const API_ORIGIN = 'https://api-app.edualex.uy';
 
-const pendingReqs = new Map();
 let loadRequestId = 0;
 
-if (useExtension) {
-  Neutralino.events.on('apiResponse', (ev) => {
-    const { id, status, body, error } = ev.detail;
-    const p = pendingReqs.get(id);
-    if (!p) return;
-    pendingReqs.delete(id);
-    if (error) return p.reject(new Error(error));
-    if (status >= 400) return p.reject(new Error(`Error ${status}`));
-    p.resolve(body);
-  });
-}
-
-function apiFetch(path, origin) {
-  if (useExtension) {
-    return new Promise((resolve, reject) => {
-      const id = crypto.randomUUID();
-      pendingReqs.set(id, { resolve, reject });
-      Neutralino.extensions.dispatch(EXT_ID, 'apiRequest', {
-        id, method: 'GET', path, origin: origin || API_ORIGIN
-      });
-      setTimeout(() => {
-        if (pendingReqs.has(id)) {
-          pendingReqs.delete(id);
-          reject(new Error('Timeout'));
-        }
-      }, 15000);
-    });
-  }
-  return directFetch(`${origin || API_ORIGIN}${path}`);
-}
-
-async function directFetch(url) {
-  const res = await fetch(url);
+async function apiFetch(path) {
+  const res = await fetch(`${API_ORIGIN}${path}`);
   if (!res.ok) throw new Error(`Error ${res.status}`);
   return res.json();
 }

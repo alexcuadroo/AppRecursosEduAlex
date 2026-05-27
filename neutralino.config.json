@@ -1,25 +1,18 @@
 {
   "applicationId": "edu.alex.apprecursosedualex",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "defaultMode": "window",
   "port": 0,
   "documentRoot": "/resources/",
   "url": "/",
   "enableServer": true,
   "enableNativeAPI": true,
-  "enableExtensions": true,
+  "enableExtensions": false,
   "tokenSecurity": "one-time",
   "logging": {
     "enabled": true,
     "writeToLogFile": true
   },
-  "nativeAllowList": ["app.*", "os.*", "extensions.*", "debug.log"],
-  "extensions": [
-    {
-      "id": "edu.alex.apiproxy",
-      "command": "node ${NL_PATH}/extensions/api-proxy/main.js"
-    }
-  ],
   "modes": {
     "window": {
       "title": "AppRecursosEduAlex",
@@ -31,12 +24,12 @@
       "fullScreen": false,
       "alwaysOnTop": false,
       "icon": "/resources/icons/appIcon.png",
-      "enableInspector": false,
+      "enableInspector": true,
       "borderless": false,
       "maximize": false,
       "hidden": false,
       "resizable": true,
-      "exitProcessOnClose": false
+      "exitProcessOnClose": true
     },
     "browser": {
       "globalVariables": {
@@ -58,7 +51,6 @@
   "cli": {
     "binaryName": "AppRecursosEduAlex",
     "resourcesPath": "/resources/",
-    "extensionsPath": "/extensions/",
     "clientLibrary": "/resources/js/neutralino.js",
     "binaryVersion": "6.7.0",
     "clientVersion": "6.7.0"
