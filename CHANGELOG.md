@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2] - 2026-05-27
+
+### Cambiado
+- Eliminada extensión Node.js (`api-proxy`) que actuaba como proxy hacia la API
+- Migrado a `fetch` directo desde el frontend a `api-app.edualex.uy`
+- Deshabilitado `enableExtensions` y removida config del proxy en `neutralino.config.json`
+- Inspect deshabilitado al inicio de la app
+
 ## [0.2.1] - 2026-05-27
 
 ### Corregido
