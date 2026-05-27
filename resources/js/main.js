@@ -148,7 +148,7 @@ async function checkForUpdate() {
     const currentTag = `v.${APP_VERSION}`;
     if (latestTag === currentTag) return;
 
-    const asset = rel.assets?.find(a => a.name.includes('win') || a.name.endsWith('.exe'));
+    const asset = rel.assets?.find(a => a.name.includes('win') && a.name.endsWith('.zip'));
     const dlUrl = asset?.browser_download_url || rel.html_url;
 
     const banner = document.createElement('div');
