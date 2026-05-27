@@ -16,6 +16,10 @@ neutralino.js
 node_modules/
 .tmp/
 
+# Build tools
+scripts/
+build.ps1
+
 # OS
 Thumbs.db
 .DS_Store

@@ -1,4 +1,4 @@
-const APP_VERSION = '0.1.0';
+const APP_VERSION = '0.2.0';
 const API_ORIGIN = 'https://rec.edualex.uy';
 const EXT_ID = 'edu.alex.apiproxy';
 const useExtension = typeof Neutralino !== 'undefined' && Neutralino.extensions;
@@ -169,7 +169,7 @@ function buildCard(r) {
       ${r.anioId ? `<span class="badge badge-anio">${lookupName(catalogs.anios, r.anioId)}</span>` : ''}
     </div>
     <div class="stats">
-      <span>👁 ${r.descargasTotales ?? 0} descargas</span>
+      <span>↓ ${r.descargasTotales ?? 0}</span>
     </div>
     <div class="actions">
       <button class="btn btn-primary">Abrir</button>
@@ -257,17 +257,17 @@ async function loadResources() {
     let data, total;
 
     if (state.tab === 'latest') {
-      const res = await apiFetch('/api/resources/latest?limit=50');
+      const res = await apiFetch('/api/resources/latest?limit=10');
       data = res.data ?? res;
       total = data.length;
     } else if (state.tab === 'top') {
-      const res = await apiFetch('/api/resources/top-visited?limit=50');
-      data = res.data ?? res;
+      const res = await apiFetch('/api/resources/top-visited?limit=5');
+      data = (res.data ?? []).map(item => item.recurso || item);
       total = data.length;
     } else {
       const params = {
-        limit: state.limit,
-        offset: state.offset,
+        limit: state.search ? 200 : state.limit,
+        offset: state.search ? 0 : state.offset,
         materiaId: state.materiaId || undefined,
         anioId: state.anioId || undefined,
         tipoId: state.tipoId || undefined,
@@ -282,7 +282,7 @@ async function loadResources() {
     state.data = data;
     hideLoading();
     renderGrid(data);
-    if (state.tab === 'all') {
+    if (state.tab === 'all' && !state.search) {
       renderPagination(total, state.limit, state.offset);
     } else {
       $('pagination').classList.add('hidden');
@@ -316,6 +316,17 @@ Neutralino.events.on('windowClose', () => {
   Neutralino.app.exit();
 });
 
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && (e.key === '=' || e.key === '-' || e.key === '0' || e.key === 'Add' || e.key === 'Subtract')) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('wheel', (e) => {
+  if (e.ctrlKey) e.preventDefault();
+}, { passive: false });
+document.addEventListener('gesturechange', (e) => e.preventDefault());
+
 document.addEventListener('DOMContentLoaded', async () => {
   await loadCatalogs();
   checkForUpdate();
@@ -334,9 +345,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
       state.search = $('filterSearch').value;
-      renderGrid(state.data);
+      state.offset = 0;
+      loadResources();
     }, 300);
   });
+
+  const pinTip = document.getElementById('pinTip');
+  if (pinTip) {
+    if (localStorage.getItem('pinTipDismissed')) pinTip.classList.add('dismissed');
+    pinTip.querySelector('.pin-tip-dismiss')?.addEventListener('click', () => {
+      pinTip.classList.add('dismissed');
+      localStorage.setItem('pinTipDismissed', '1');
+    });
+  }
 
   $('btnClearFilters').addEventListener('click', () => {
     ['filterMateria', 'filterAnio', 'filterTipo', 'filterFormato'].forEach(id => {

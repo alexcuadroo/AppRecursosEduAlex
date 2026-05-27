@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
   "applicationId": "edu.alex.apprecursosedualex",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "defaultMode": "window",
   "port": 0,
   "documentRoot": "/resources/",
@@ -37,7 +37,7 @@
       "fullScreen": false,
       "alwaysOnTop": false,
       "icon": "/resources/icons/appIcon.png",
-      "enableInspector": true,
+      "enableInspector": false,
       "borderless": false,
       "maximize": false,
       "hidden": false,
