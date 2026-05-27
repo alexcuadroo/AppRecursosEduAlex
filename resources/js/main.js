@@ -4,6 +4,7 @@ const EXT_ID = 'edu.alex.apiproxy';
 const useExtension = typeof Neutralino !== 'undefined' && Neutralino.extensions;
 
 const pendingReqs = new Map();
+let loadRequestId = 0;
 
 if (useExtension) {
   Neutralino.events.on('apiResponse', (ev) => {
@@ -61,6 +62,12 @@ let catalogs = {};
 const $ = id => document.getElementById(id);
 const $$ = sel => document.querySelectorAll(sel);
 
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function showLoading() {
   $('loading').classList.remove('hidden');
   $('error').classList.add('hidden');
@@ -86,7 +93,6 @@ function apiFetchResources(params = {}) {
   if (params.anioId) q.set('anioId', params.anioId);
   if (params.tipoId) q.set('tipoId', params.tipoId);
   if (params.formatoId) q.set('formatoId', params.formatoId);
-  if (params.after) q.set('after', params.after);
   return apiFetch(`/api/resources?${q.toString()}`);
 }
 
@@ -150,10 +156,11 @@ async function checkForUpdate() {
     banner.innerHTML = `
       <span>Nueva versi\u00f3n disponible: <strong>${latestTag}</strong></span>
       <a href="${dlUrl}" target="_blank" class="btn btn-update">Descargar</a>
+      <a href="${rel.html_url}" target="_blank" class="btn btn-changelog">Nota de Cambios</a>
       <button class="btn-update-dismiss" aria-label="Cerrar">&times;</button>
     `;
     banner.querySelector('.btn-update-dismiss').addEventListener('click', () => banner.remove());
-    document.getElementById('app').prepend(banner);
+    $('app').prepend(banner);
   } catch { }
 }
 
@@ -161,12 +168,12 @@ function buildCard(r) {
   const card = document.createElement('div');
   card.className = 'resource-card';
   card.innerHTML = `
-    <h3>${r.titulo || 'Sin título'}</h3>
+    <h3>${escapeHtml(r.titulo || 'Sin título')}</h3>
     <div class="meta">
-      ${r.materiaId ? `<span class="badge badge-materia">${lookupName(catalogs.materias, r.materiaId)}</span>` : ''}
-      ${r.tipoId ? `<span class="badge badge-tipo">${lookupName(catalogs.tipos, r.tipoId)}</span>` : ''}
-      ${r.formatoId ? `<span class="badge badge-formato">${lookupName(catalogs.formatos, r.formatoId)}</span>` : ''}
-      ${r.anioId ? `<span class="badge badge-anio">${lookupName(catalogs.anios, r.anioId)}</span>` : ''}
+      ${r.materiaId ? `<span class="badge badge-materia">${escapeHtml(lookupName(catalogs.materias, r.materiaId))}</span>` : ''}
+      ${r.tipoId ? `<span class="badge badge-tipo">${escapeHtml(lookupName(catalogs.tipos, r.tipoId))}</span>` : ''}
+      ${r.formatoId ? `<span class="badge badge-formato">${escapeHtml(lookupName(catalogs.formatos, r.formatoId))}</span>` : ''}
+      ${r.anioId ? `<span class="badge badge-anio">${escapeHtml(lookupName(catalogs.anios, r.anioId))}</span>` : ''}
     </div>
     <div class="stats">
       <span>↓ ${r.descargasTotales ?? 0}</span>
@@ -175,7 +182,16 @@ function buildCard(r) {
       <button class="btn btn-primary">Abrir</button>
     </div>
   `;
-  card.querySelector('.btn-primary').addEventListener('click', () => openResource(r.uuid));
+  const btn = card.querySelector('.btn-primary');
+  btn.addEventListener('click', () => {
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = 'Abriendo...';
+    openResource(r.uuid).finally(() => {
+      btn.disabled = false;
+      btn.textContent = 'Abrir';
+    });
+  });
   return card;
 }
 
@@ -251,6 +267,7 @@ function changePage(page) {
 }
 
 async function loadResources() {
+  const rid = ++loadRequestId;
   state.loading = true;
   showLoading();
   try {
@@ -279,6 +296,7 @@ async function loadResources() {
       state.total = total;
     }
 
+    if (rid !== loadRequestId) return;
     state.data = data;
     hideLoading();
     renderGrid(data);
@@ -288,6 +306,7 @@ async function loadResources() {
       $('pagination').classList.add('hidden');
     }
   } catch (err) {
+    if (rid !== loadRequestId) return;
     hideLoading();
     showError(`No se pudieron cargar los recursos: ${err.message}`);
   }
